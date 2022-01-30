@@ -1,0 +1,58 @@
+  // Connection.connect();
+
+// //inquirer prompts to ask user about which option they need to pick
+// //if else or switch to pick option
+// const menu = () => {
+// inquirer.prompt({
+//         type: "list",
+//         choices: ["add department", "add role", "add employee", "view department", "view role", "view employee", "update employee role", "delete employee", "quit"],
+//         message:"What would like to do?",
+//         name: "option", 
+//                 })
+//         .then((answer) => {
+//           switch (answer.option) {
+//           case "view employees?":
+//             return viewEmployees ();
+//           case "view roles?":
+//             return viewRoles ();
+//           case "view employees by department?":
+//             return viewdepartments ();
+//           case "add employee?":
+//             return addEmployee ();
+//           case "update employee?":
+//             return UpdateEmployee ();
+//           case "delete employee?":
+//               return deleteEmployee ();
+//           case "add department?":
+//             return addDepartment ();
+//           case "add role?":
+//             return addRole ();
+//           case "Quit?":
+//               return quit ();
+
+//         }
+//         },
+
+//   //get all departments
+//   const allDepartments = () => {
+//     db.query(`SELECT * FROM department`, (err, rows) => {
+//         console.log(rows);
+//     });
+//   };
+//   //get all roles
+//   db.query(`SELECT * FROM roles`, (err, rows) => {
+//     console.log(rows);
+//   });
+
+//   //get all employees
+//   db.query(`SELECT * FROM employee`, (err, rows) => {
+//     console.log(rows);
+//   });
+
+ 
+// menu();
+
+
+
+
+// module.exports = connection();
