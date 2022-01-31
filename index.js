@@ -1,7 +1,7 @@
+//dependencies
 const inquirer = require('inquirer');
 const mysql = require('mysql2');
-
-const connection = require('mysql2/typingssql/lib/Connection/my');
+require('console.table');
 
 //connect to database
 const connection = mysql.createConnection(
@@ -9,62 +9,77 @@ const connection = mysql.createConnection(
     host: 'localhost',
     //YourMysql username
     user: 'root',
+    // port: 5000,
     //Your Mysql Password
     password: '1234',
+
     database: 'employee_tracker'
   });
 
-  connection.connect(function (err) {
-    if (err) throw err;
-  });
-  
-  module.exports = connection;
 
+  connection.connect()
+//TO DO:
+//view all departments, view all roles, view all employees, 
+//add a department, add a role, add an employee, 
+//and update an employee role
 
   const menu = () => {
     inquirer.prompt({
       name: "choices",
       type: "list",
       message: "which choice would like to pick?",
-      choices: ["view", "add", "delete", "update", "exit"]
+      //add each, update each, add employee role
+      choices: ["viewAllDepartments", "viewAllRoles", "viewAllEmployees", "addDepartment","addRole", "addEmployee", "UpdateEmployeeRole", "exit"]
     }).then(function (answer) {
-      if (answer.choices === "view") {
-        viewChoice();
+      if (answer.choices === "viewAllDepartments") {
+        viewAllDepartments();
       }
-      else if (answer.choices === "add") {
-        addChoice();
+      else if (answer.choices === "viewAllRoles") {
+        viewAllRoles();
       }
-      else if (answer.choices === "delete") {
-        deleteChoice();
+      else if (answer.choices === "viewAllEmployees") {
+        viewAllEmployees();
       }
-      else if (answer.choices === "update") {
-        updateChoice();
+      else if (answer.choices === "addDepartment") {
+        addDepartment();
       }
+      else if (answer.choices === "addRole") {
+        addRole();
+      }
+      else if (answer.choices === "addEmployee") {
+        addEmployee();
+      }
+      else if (answer.choices === "updateEmployeeRole") {
+        updateEmloyeeRole();
+      }
+      
       else if (answer.choices === "exit") {
         connection.end();
       }
     });
   }
-  getRole = () => {
-    connection.query("SELECT id, title FROM role", (err, res) => {
+  viewAllDepartments = () => {
+    connection.query("SELECT * FROM department", (err, res) => {
+      if (err) {throw err} else {
+      console.table(res);
+      }
+    });
+    menu()
+  }
+  viewAllRoles = () => {
+    connection.query("SELECT id, title, salary FROM role", (err, res) => {
       if (err) throw err;
       role = res;
     });
   }
-  getDepartment = () => {
-    connection.query("SELECT id, name FROM department", (err, res) => {
+  viewAllEmployees = () => {
+    connection.query("SELECT id, first_name, last_name, CONCAT_WS ('', first_name, last_name) AS employee FROM employee", (err, res) => {
       if (err) throw err;
-      department = res;
+      allEmployees = res;
     });
   }
-  getManager = () => {
-    connection.query("SELECT id, first_name, last_name, CONCAT_WS ('', first_name, last_name) AS manager FROM employee", (err, res) => {
-      if (err) throw err;
-      manager = res;
-    });
-  }
-  
-  getEmployee = () => {
+  //ADD D
+  addDepartment = () => {
     connection.query("SELECT id, first_name, last_name, CONCAT_WS ('', first_name, last_name) AS employee FROM employee", (err, res) => {
       if (err) throw err;
       employee = res;
@@ -102,5 +117,7 @@ const connection = mysql.createConnection(
       }
     })
   };
+
+
   
   menu()
